@@ -509,13 +509,15 @@ namespace X11 {
 
 #if defined(OLC_PLATFORM_GLUT)
 #if defined(__linux__)
-#include <GL/glut.h>
 #include <GL/freeglut_ext.h>
+#include <GL/glut.h>
+
 #endif
 #if defined(__APPLE__)
 #include <GLUT/glut.h>
-#include <objc/message.h>
 #include <objc/NSObjCRuntime.h>
+#include <objc/message.h>
+
 #endif
 #endif
 #endif
@@ -552,9 +554,9 @@ struct Pixel {
 
     enum Mode { NORMAL, MASK, ALPHA, CUSTOM };
 
-    constexpr Pixel();
-    constexpr Pixel(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = nDefaultAlpha);
-    constexpr Pixel(uint32_t p);
+    Pixel();
+    Pixel(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = nDefaultAlpha);
+    Pixel(uint32_t p);
     Pixel &operator=(const Pixel &v) = default;
     bool operator==(const Pixel &p) const;
     bool operator!=(const Pixel &p) const;
@@ -1413,18 +1415,18 @@ namespace olc {
 // O------------------------------------------------------------------------------O
 // | olc::Pixel IMPLEMENTATION                                                    |
 // O------------------------------------------------------------------------------O
-constexpr Pixel::Pixel() {
+Pixel::Pixel() {
     r = 0;
     g = 0;
     b = 0;
     a = nDefaultAlpha;
 }
 
-constexpr Pixel::Pixel(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) {
+Pixel::Pixel(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) {
     n = red | (green << 8) | (blue << 16) | (alpha << 24);
 } // Thanks jarekpelczar
 
-constexpr Pixel::Pixel(uint32_t p) { n = p; }
+Pixel::Pixel(uint32_t p) { n = p; }
 
 bool Pixel::operator==(const Pixel &p) const { return n == p.n; }
 
@@ -3761,8 +3763,9 @@ std::unique_ptr<ImageLoader> olc::Sprite::loader = nullptr;
 #if defined(OLC_GFX_OPENGL10)
 
 #if defined(OLC_PLATFORM_WINAPI)
-#include <dwmapi.h>
 #include <GL/gl.h>
+#include <dwmapi.h>
+
 #if !defined(__MINGW32__)
 #pragma comment(lib, "Dwmapi.lib")
 #endif
@@ -3965,25 +3968,25 @@ class Renderer_OGL10 : public olc::Renderer {
     void SetDecalMode(const olc::DecalMode &mode) override {
         if (mode != nDecalMode) {
             switch (mode) {
-            case olc::DecalMode::NORMAL:
-            case olc::DecalMode::MODEL3D:
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                break;
-            case olc::DecalMode::ADDITIVE:
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-                break;
-            case olc::DecalMode::MULTIPLICATIVE:
-                glBlendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA);
-                break;
-            case olc::DecalMode::STENCIL:
-                glBlendFunc(GL_ZERO, GL_SRC_ALPHA);
-                break;
-            case olc::DecalMode::ILLUMINATE:
-                glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);
-                break;
-            case olc::DecalMode::WIREFRAME:
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                break;
+                case olc::DecalMode::NORMAL:
+                case olc::DecalMode::MODEL3D:
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                    break;
+                case olc::DecalMode::ADDITIVE:
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+                    break;
+                case olc::DecalMode::MULTIPLICATIVE:
+                    glBlendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+                    break;
+                case olc::DecalMode::STENCIL:
+                    glBlendFunc(GL_ZERO, GL_SRC_ALPHA);
+                    break;
+                case olc::DecalMode::ILLUMINATE:
+                    glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);
+                    break;
+                case olc::DecalMode::WIREFRAME:
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                    break;
             }
 
             nDecalMode = mode;
@@ -4561,24 +4564,24 @@ class Renderer_OGL33 : public olc::Renderer {
     void SetDecalMode(const olc::DecalMode &mode) override {
         if (mode != nDecalMode) {
             switch (mode) {
-            case olc::DecalMode::NORMAL:
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                break;
-            case olc::DecalMode::ADDITIVE:
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-                break;
-            case olc::DecalMode::MULTIPLICATIVE:
-                glBlendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA);
-                break;
-            case olc::DecalMode::STENCIL:
-                glBlendFunc(GL_ZERO, GL_SRC_ALPHA);
-                break;
-            case olc::DecalMode::ILLUMINATE:
-                glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);
-                break;
-            case olc::DecalMode::WIREFRAME:
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                break;
+                case olc::DecalMode::NORMAL:
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                    break;
+                case olc::DecalMode::ADDITIVE:
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+                    break;
+                case olc::DecalMode::MULTIPLICATIVE:
+                    glBlendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+                    break;
+                case olc::DecalMode::STENCIL:
+                    glBlendFunc(GL_ZERO, GL_SRC_ALPHA);
+                    break;
+                case olc::DecalMode::ILLUMINATE:
+                    glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_SRC_ALPHA);
+                    break;
+                case olc::DecalMode::WIREFRAME:
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                    break;
             }
 
             nDecalMode = mode;
@@ -5202,67 +5205,67 @@ class Platform_Windows : public olc::Platform {
     // Windows Event Handler - this is statically connected to the windows event system
     static LRESULT CALLBACK olc_WindowEvent(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
         switch (uMsg) {
-        case WM_MOUSEMOVE: {
-            // Thanks @ForAbby (Discord)
-            uint16_t x = lParam & 0xFFFF;
-            uint16_t y = (lParam >> 16) & 0xFFFF;
-            int16_t ix = *(int16_t *)&x;
-            int16_t iy = *(int16_t *)&y;
-            ptrPGE->olc_UpdateMouse(ix, iy);
-            return 0;
-        }
-        case WM_SIZE:
-            ptrPGE->olc_UpdateWindowSize(lParam & 0xFFFF, (lParam >> 16) & 0xFFFF);
-            return 0;
-        case WM_MOUSEWHEEL:
-            ptrPGE->olc_UpdateMouseWheel(GET_WHEEL_DELTA_WPARAM(wParam));
-            return 0;
-        case WM_MOUSELEAVE:
-            ptrPGE->olc_UpdateMouseFocus(false);
-            return 0;
-        case WM_SETFOCUS:
-            ptrPGE->olc_UpdateKeyFocus(true);
-            return 0;
-        case WM_KILLFOCUS:
-            ptrPGE->olc_UpdateKeyFocus(false);
-            return 0;
-        case WM_KEYDOWN:
-            ptrPGE->olc_UpdateKeyState(mapKeys[wParam], true);
-            return 0;
-        case WM_KEYUP:
-            ptrPGE->olc_UpdateKeyState(mapKeys[wParam], false);
-            return 0;
-        case WM_SYSKEYDOWN:
-            ptrPGE->olc_UpdateKeyState(mapKeys[wParam], true);
-            return 0;
-        case WM_SYSKEYUP:
-            ptrPGE->olc_UpdateKeyState(mapKeys[wParam], false);
-            return 0;
-        case WM_LBUTTONDOWN:
-            ptrPGE->olc_UpdateMouseState(0, true);
-            return 0;
-        case WM_LBUTTONUP:
-            ptrPGE->olc_UpdateMouseState(0, false);
-            return 0;
-        case WM_RBUTTONDOWN:
-            ptrPGE->olc_UpdateMouseState(1, true);
-            return 0;
-        case WM_RBUTTONUP:
-            ptrPGE->olc_UpdateMouseState(1, false);
-            return 0;
-        case WM_MBUTTONDOWN:
-            ptrPGE->olc_UpdateMouseState(2, true);
-            return 0;
-        case WM_MBUTTONUP:
-            ptrPGE->olc_UpdateMouseState(2, false);
-            return 0;
-        case WM_CLOSE:
-            ptrPGE->olc_Terminate();
-            return 0;
-        case WM_DESTROY:
-            PostQuitMessage(0);
-            DestroyWindow(hWnd);
-            return 0;
+            case WM_MOUSEMOVE: {
+                // Thanks @ForAbby (Discord)
+                uint16_t x = lParam & 0xFFFF;
+                uint16_t y = (lParam >> 16) & 0xFFFF;
+                int16_t ix = *(int16_t *)&x;
+                int16_t iy = *(int16_t *)&y;
+                ptrPGE->olc_UpdateMouse(ix, iy);
+                return 0;
+            }
+            case WM_SIZE:
+                ptrPGE->olc_UpdateWindowSize(lParam & 0xFFFF, (lParam >> 16) & 0xFFFF);
+                return 0;
+            case WM_MOUSEWHEEL:
+                ptrPGE->olc_UpdateMouseWheel(GET_WHEEL_DELTA_WPARAM(wParam));
+                return 0;
+            case WM_MOUSELEAVE:
+                ptrPGE->olc_UpdateMouseFocus(false);
+                return 0;
+            case WM_SETFOCUS:
+                ptrPGE->olc_UpdateKeyFocus(true);
+                return 0;
+            case WM_KILLFOCUS:
+                ptrPGE->olc_UpdateKeyFocus(false);
+                return 0;
+            case WM_KEYDOWN:
+                ptrPGE->olc_UpdateKeyState(mapKeys[wParam], true);
+                return 0;
+            case WM_KEYUP:
+                ptrPGE->olc_UpdateKeyState(mapKeys[wParam], false);
+                return 0;
+            case WM_SYSKEYDOWN:
+                ptrPGE->olc_UpdateKeyState(mapKeys[wParam], true);
+                return 0;
+            case WM_SYSKEYUP:
+                ptrPGE->olc_UpdateKeyState(mapKeys[wParam], false);
+                return 0;
+            case WM_LBUTTONDOWN:
+                ptrPGE->olc_UpdateMouseState(0, true);
+                return 0;
+            case WM_LBUTTONUP:
+                ptrPGE->olc_UpdateMouseState(0, false);
+                return 0;
+            case WM_RBUTTONDOWN:
+                ptrPGE->olc_UpdateMouseState(1, true);
+                return 0;
+            case WM_RBUTTONUP:
+                ptrPGE->olc_UpdateMouseState(1, false);
+                return 0;
+            case WM_MBUTTONDOWN:
+                ptrPGE->olc_UpdateMouseState(2, true);
+                return 0;
+            case WM_MBUTTONUP:
+                ptrPGE->olc_UpdateMouseState(2, false);
+                return 0;
+            case WM_CLOSE:
+                ptrPGE->olc_Terminate();
+                return 0;
+            case WM_DESTROY:
+                PostQuitMessage(0);
+                DestroyWindow(hWnd);
+                return 0;
         }
         return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
@@ -5520,37 +5523,37 @@ class Platform_Linux : public olc::Platform {
                 ptrPGE->olc_UpdateKeyState(mapKeys[sym], false);
             } else if (xev.type == ButtonPress) {
                 switch (xev.xbutton.button) {
-                case 1:
-                    ptrPGE->olc_UpdateMouseState(0, true);
-                    break;
-                case 2:
-                    ptrPGE->olc_UpdateMouseState(2, true);
-                    break;
-                case 3:
-                    ptrPGE->olc_UpdateMouseState(1, true);
-                    break;
-                case 4:
-                    ptrPGE->olc_UpdateMouseWheel(120);
-                    break;
-                case 5:
-                    ptrPGE->olc_UpdateMouseWheel(-120);
-                    break;
-                default:
-                    break;
+                    case 1:
+                        ptrPGE->olc_UpdateMouseState(0, true);
+                        break;
+                    case 2:
+                        ptrPGE->olc_UpdateMouseState(2, true);
+                        break;
+                    case 3:
+                        ptrPGE->olc_UpdateMouseState(1, true);
+                        break;
+                    case 4:
+                        ptrPGE->olc_UpdateMouseWheel(120);
+                        break;
+                    case 5:
+                        ptrPGE->olc_UpdateMouseWheel(-120);
+                        break;
+                    default:
+                        break;
                 }
             } else if (xev.type == ButtonRelease) {
                 switch (xev.xbutton.button) {
-                case 1:
-                    ptrPGE->olc_UpdateMouseState(0, false);
-                    break;
-                case 2:
-                    ptrPGE->olc_UpdateMouseState(2, false);
-                    break;
-                case 3:
-                    ptrPGE->olc_UpdateMouseState(1, false);
-                    break;
-                default:
-                    break;
+                    case 1:
+                        ptrPGE->olc_UpdateMouseState(0, false);
+                        break;
+                    case 2:
+                        ptrPGE->olc_UpdateMouseState(2, false);
+                        break;
+                    case 3:
+                        ptrPGE->olc_UpdateMouseState(1, false);
+                        break;
+                    default:
+                        break;
                 }
             } else if (xev.type == MotionNotify) {
                 ptrPGE->olc_UpdateMouse(xev.xmotion.x, xev.xmotion.y);
@@ -5767,22 +5770,22 @@ class Platform_GLUT : public olc::Platform {
 
         glutKeyboardFunc([](unsigned char key, int x, int y) -> void {
             switch (glutGetModifiers()) {
-            case 0: // This is when there are no modifiers
-                if ('a' <= key && key <= 'z')
-                    key -= 32;
-                break;
-            case GLUT_ACTIVE_SHIFT:
-                ptrPGE->olc_UpdateKeyState(Key::SHIFT, true);
-                break;
-            case GLUT_ACTIVE_CTRL:
-                if ('a' <= key && key <= 'z')
-                    key -= 32;
-                ptrPGE->olc_UpdateKeyState(Key::CTRL, true);
-                break;
-            case GLUT_ACTIVE_ALT:
-                if ('a' <= key && key <= 'z')
-                    key -= 32;
-                break;
+                case 0: // This is when there are no modifiers
+                    if ('a' <= key && key <= 'z')
+                        key -= 32;
+                    break;
+                case GLUT_ACTIVE_SHIFT:
+                    ptrPGE->olc_UpdateKeyState(Key::SHIFT, true);
+                    break;
+                case GLUT_ACTIVE_CTRL:
+                    if ('a' <= key && key <= 'z')
+                        key -= 32;
+                    ptrPGE->olc_UpdateKeyState(Key::CTRL, true);
+                    break;
+                case GLUT_ACTIVE_ALT:
+                    if ('a' <= key && key <= 'z')
+                        key -= 32;
+                    break;
             }
 
             if (mapKeys[key])
@@ -5791,23 +5794,23 @@ class Platform_GLUT : public olc::Platform {
 
         glutKeyboardUpFunc([](unsigned char key, int x, int y) -> void {
             switch (glutGetModifiers()) {
-            case 0: // This is when there are no modifiers
-                if ('a' <= key && key <= 'z')
-                    key -= 32;
-                break;
-            case GLUT_ACTIVE_SHIFT:
-                ptrPGE->olc_UpdateKeyState(Key::SHIFT, false);
-                break;
-            case GLUT_ACTIVE_CTRL:
-                if ('a' <= key && key <= 'z')
-                    key -= 32;
-                ptrPGE->olc_UpdateKeyState(Key::CTRL, false);
-                break;
-            case GLUT_ACTIVE_ALT:
-                if ('a' <= key && key <= 'z')
-                    key -= 32;
-                // No ALT in PGE
-                break;
+                case 0: // This is when there are no modifiers
+                    if ('a' <= key && key <= 'z')
+                        key -= 32;
+                    break;
+                case GLUT_ACTIVE_SHIFT:
+                    ptrPGE->olc_UpdateKeyState(Key::SHIFT, false);
+                    break;
+                case GLUT_ACTIVE_CTRL:
+                    if ('a' <= key && key <= 'z')
+                        key -= 32;
+                    ptrPGE->olc_UpdateKeyState(Key::CTRL, false);
+                    break;
+                case GLUT_ACTIVE_ALT:
+                    if ('a' <= key && key <= 'z')
+                        key -= 32;
+                    // No ALT in PGE
+                    break;
             }
 
             if (mapKeys[key])
@@ -5827,24 +5830,24 @@ class Platform_GLUT : public olc::Platform {
 
         glutMouseFunc([](int button, int state, int x, int y) -> void {
             switch (button) {
-            case GLUT_LEFT_BUTTON:
-                if (state == GLUT_UP)
-                    ptrPGE->olc_UpdateMouseState(0, false);
-                else if (state == GLUT_DOWN)
-                    ptrPGE->olc_UpdateMouseState(0, true);
-                break;
-            case GLUT_MIDDLE_BUTTON:
-                if (state == GLUT_UP)
-                    ptrPGE->olc_UpdateMouseState(2, false);
-                else if (state == GLUT_DOWN)
-                    ptrPGE->olc_UpdateMouseState(2, true);
-                break;
-            case GLUT_RIGHT_BUTTON:
-                if (state == GLUT_UP)
-                    ptrPGE->olc_UpdateMouseState(1, false);
-                else if (state == GLUT_DOWN)
-                    ptrPGE->olc_UpdateMouseState(1, true);
-                break;
+                case GLUT_LEFT_BUTTON:
+                    if (state == GLUT_UP)
+                        ptrPGE->olc_UpdateMouseState(0, false);
+                    else if (state == GLUT_DOWN)
+                        ptrPGE->olc_UpdateMouseState(0, true);
+                    break;
+                case GLUT_MIDDLE_BUTTON:
+                    if (state == GLUT_UP)
+                        ptrPGE->olc_UpdateMouseState(2, false);
+                    else if (state == GLUT_DOWN)
+                        ptrPGE->olc_UpdateMouseState(2, true);
+                    break;
+                case GLUT_RIGHT_BUTTON:
+                    if (state == GLUT_UP)
+                        ptrPGE->olc_UpdateMouseState(1, false);
+                    else if (state == GLUT_DOWN)
+                        ptrPGE->olc_UpdateMouseState(1, true);
+                    break;
             }
         });
 
