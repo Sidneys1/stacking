@@ -23,4 +23,4 @@ set(INTERPROCEDURAL_OPTIMIZATION FALSE)
 
 INCLUDE_DIRECTORIES(include)
 
-ADD_EXECUTABLE(${PROJECT_NAME} main.cpp util.cpp viewer.cpp stb_image.cpp stb_image_resize.cpp olcPixelGameEngine.cpp)
+ADD_EXECUTABLE(${PROJECT_NAME} main.cpp util.cpp viewer.cpp kernel.cpp stb_image.cpp stb_image_resize.cpp olcPixelGameEngine.cpp)
