@@ -1,3 +1,5 @@
+#include <fmt/core.h>
+
 #include "constants.h"
 #include "olcPixelGameEngine.h"
 
@@ -40,11 +42,11 @@ class Viewer : public olc::PixelGameEngine {
         if (int delta = GetMouseWheel(); delta != 0 && !thread_running()) {
             if (delta > 0) {
                 m_kernel_size += 2;
-                std::cout << m_kernel_size << std::endl;
+                fmt::print("{:L}\n", m_kernel_size);
                 start_diff_thread();
             } else if (m_kernel_size > 1) {
                 m_kernel_size -= 2;
-                std::cout << m_kernel_size << std::endl;
+                fmt::print("{:L}\n", m_kernel_size);
                 start_diff_thread();
             }
         }
